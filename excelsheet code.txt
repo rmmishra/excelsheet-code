@@ -1,0 +1,55 @@
+        
+		// poi jar file....
+		
+		HSSFWorkbook hwb = new HSSFWorkbook();
+        HSSFSheet sheet = hwb.createSheet("new sheet");
+        HSSFRow rowhead = sheet.createRow((short) 0);
+        HSSFCell cell = rowhead.createCell((short) 0);
+        cell.setCellValue("colloumn 1");
+        HSSFCell cellA = rowhead.createCell((short) 1);
+        cellA.setCellValue("colloumn 2");
+        HSSFCell cellB = rowhead.createCell((short) 2);
+        cellB.setCellValue("colloumn 3");
+        HSSFCell cellC = rowhead.createCell((short) 3);
+        cellC.setCellValue("colloumn 4");
+                
+        HSSFCellStyle style = hwb.createCellStyle(); 
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_JUSTIFY);
+        
+        HSSFFont font = hwb.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        style.setFont(font); 
+        cell.setCellStyle(style);
+        cellA.setCellStyle(style);
+        cellB.setCellStyle(style);
+        cellC.setCellStyle(style);
+        sheet.autoSizeColumn(0);
+        sheet.autoSizeColumn(1);
+        sheet.autoSizeColumn(2);
+        sheet.autoSizeColumn(3);
+		
+		//loop...
+		
+		
+		HSSFRow row = sheet.createRow((short) index);
+           
+            row.createCell((short) 0).setCellValue(sno);
+            row.createCell((short) 1).setCellValue(rs.getString("tname"));
+            row.createCell((short) 2).setCellValue(rs.getString("college"));
+            row.createCell((short) 3).setCellValue(rs.getInt("score"));
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+			
+			
+			//loop end
+		
+		
+		response.setHeader("application/x-excel","");
+              response.addHeader("content-disposition", "attachment; filename=" + "excelsheet.xls");
+
+              OutputStream os =response.getOutputStream();
+              hwb.write(os);
+              os.close();
